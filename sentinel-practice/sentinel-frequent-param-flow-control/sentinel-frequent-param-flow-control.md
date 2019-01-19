@@ -53,7 +53,13 @@ private String resourceName = "freqParam";
 
 热点参数的规则是通过 ParamFlowRule 来定义的，跟流控的规则类 FlowRule 差不多，具体的属性如下表所示：
 
-![sentinel-freq-param-flow-rule](images/sentinel-freq-param-flow-rule.png)
+| 属性              | 说明                                                         | 注意                                       |
+| ----------------- | ------------------------------------------------------------ | ------------------------------------------ |
+| resource          | 资源名，必填                                                 |                                            |
+| count             | 限流阈值，必填                                               |                                            |
+| grade             | 限流模式                                                     | 目前只支持 pqs 模式                        |
+| paramIdx          | 热点参数的索引，必填                                         | 对应 SphU.entry(xx, args) 中的参数索引位置 |
+| paramFlowItemList | 参数例外项，可以针对特定的参数的值设置单独的阈值，而不受前面 count 阈值的限制。 | 仅支持基本类型                             |
 
 定义好规则之后，可以通过 ParamFlowRuleManager 的 loadRules 方法更新热点参数规则，如下所示：
 
@@ -85,6 +91,7 @@ public static Entry entry(Method method, EntryType type, int count, Object... ar
 ``` java
 /**
  * 热点参数限流
+ * 构造不同的uid的值，并且以不同的频率来请求该方法，查看效果
  */
 @GetMapping("/freqParamFlow")
 public @ResponseBody
@@ -108,7 +115,7 @@ String freqParamFlow(@RequestParam("uid") Long uid,@RequestParam("ip") Long ip) 
 
 ### 查看效果
 
-现在我们在浏览器中快速的刷新页面来请求该方法，可以看到如下两种返回结果：
+现在我们使用不同的 uid 来请求该接口，通过在浏览器中用不同的速度来刷新页面来请求该方法，可以看到如下两种返回结果：
 
 ![sentinel-freq-param-flow-request1](images/sentinel-freq-param-flow-request1.png)
 

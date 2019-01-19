@@ -1,6 +1,6 @@
 # Sentinel教程
 
-本项目内容为一个 Sentinel 的教程。主要包括 Sentinel 原理和 Sentinel 实践 两部分内容。
+本项目内容为一个 Sentinel 的教程。主要包括 Sentinel 原理和 Sentinel 实践两部分内容。
 
 如您觉得该项目对您有用，欢迎点击右上方的 **Star** 按钮，给予支持！！
 

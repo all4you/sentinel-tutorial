@@ -37,6 +37,7 @@ public class FreqParamFlowController {
 
     /**
      * 热点参数限流
+     * 构造不同的uid的值，并且以不同的频率来请求该方法，查看效果
      */
     @GetMapping("/freqParamFlow")
     public @ResponseBody
@@ -44,7 +45,7 @@ public class FreqParamFlowController {
         Entry entry = null;
         String retVal;
         try{
-            // 只对参数uid进行限流，参数ip不进行限制
+            // 只对参数 uid 的值进行限流，参数 ip 的值不进行限制
             entry = SphU.entry(resourceName, EntryType.IN,1,uid);
             retVal = "passed";
         }catch(BlockException e){
