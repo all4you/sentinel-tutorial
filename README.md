@@ -13,26 +13,26 @@
 ## Sentinel原理系列
 
 - [Sentinel原理：全解析](sentinel-principle/sentinel-overall-introduce/sentinel-overall-introduce.md)
-- [Sentinel原理：重要概念](https://github.com/all4you/sentinel-tutorial/sentinel-principle/sentinel-concept-of-entities/sentinel-concept-of-entities.md)
-- [Sentinel原理：调用链](https://github.com/all4you/sentinel-tutorial/sentinel-principle/sentinel-slot-chain/sentinel-slot-chain.md)
-- [Sentinel原理：滑动窗口](https://github.com/all4you/sentinel-tutorial/sentinel-principle/sentinel-slide-window/sentinel-slide-window.md)
+- [Sentinel原理：重要概念](sentinel-principle/sentinel-concept-of-entities/sentinel-concept-of-entities.md)
+- [Sentinel原理：调用链](sentinel-principle/sentinel-slot-chain/sentinel-slot-chain.md)
+- [Sentinel原理：滑动窗口](sentinel-principle/sentinel-slide-window/sentinel-slide-window.md)
 - 未完待续。。
 
 
 
 ## Sentinel实战系列
 
-- [Sentinel实战：为系统做限流保护](https://github.com/all4you/sentinel-tutorial/sentinel-practice/sentinel-flow-control/sentinel-flow-control.md)
-- [Sentinel实战：使用控制台管理规则](https://github.com/all4you/sentinel-tutorial/sentinel-practice/sentinel-manage-rule-with-dashboard/sentinel-manage-rule-with-dashboard.md)
-- [Sentinel实战：规则持久化的5种方式](https://github.com/all4you/sentinel-tutorial/sentinel-practice/sentinel-persistence-rules/sentinel-persistence-rules.md)
-- [Sentinel实战：在集群中实现流控](https://github.com/all4you/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/sentinel-cluster-flow-control.md)
-- [Sentinel实战：如何对热点参数限流](https://github.com/all4you/sentinel-tutorial/sentinel-practice/sentinel-frequent-param-flow-control/sentinel-frequent-param-flow-control.md)
+- [Sentinel实战：为系统做限流保护](sentinel-practice/sentinel-flow-control/sentinel-flow-control.md)
+- [Sentinel实战：使用控制台管理规则](sentinel-practice/sentinel-manage-rule-with-dashboard/sentinel-manage-rule-with-dashboard.md)
+- [Sentinel实战：规则持久化的5种方式](sentinel-practice/sentinel-persistence-rules/sentinel-persistence-rules.md)
+- [Sentinel实战：在集群中实现流控](sentinel-practice/sentinel-cluster-flow-control/sentinel-cluster-flow-control.md)
+- [Sentinel实战：如何对热点参数限流](sentinel-practice/sentinel-frequent-param-flow-control/sentinel-frequent-param-flow-control.md)
 - 未完待续。。
 
 
 
 ## 我的公众号
 
-如果你觉得该项目对您有帮助，欢迎您关注我的公众号「逅弈逐码」，了解更多的原创文章。
+如果你觉得该项目对您有帮助，欢迎您关注我的公众号「逅弈逐码」，了解更多原创文章。
 
 ![logo](logo.jpg)

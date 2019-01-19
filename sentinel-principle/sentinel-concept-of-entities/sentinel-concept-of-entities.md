@@ -103,3 +103,11 @@ Metric 是 Sentinel 中用来进行实时数据统计的度量接口，node就�
 Metric有一个实现类：ArrayMetric，在ArrayMetric中主要是通过一个叫WindowLeapArray的对象进行窗口统计的。
 
 ![metric](images/metric.png)
+
+
+
+## 我的公众号
+
+如果你觉得该项目对您有帮助，欢迎您关注我的公众号「逅弈逐码」，了解更多原创文章。
+
+![logo](../../logo.jpg)

@@ -339,9 +339,9 @@ curl http://localhost:8719/setRules?type=<XXXX>&data=<DATA>
 
 
 
-### 配套代码
+## 我的公众号
 
-[FlowController](https://github.com/all4you/sentinel-tutorial/sentinel-practice/sentinel-manage-rule-with-dashboard/src/main/java/com/lememo/sentinel/dashboard/FlowController.java)
+如果你觉得该项目对您有帮助，欢迎您关注我的公众号「逅弈逐码」，了解更多原创文章。
 
-
+![logo](../../logo.jpg)
 

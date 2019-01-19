@@ -246,7 +246,8 @@ sentinel-record 日志中会记录加载好的规则等信息，具体的实时�
 
 
 
-### 配套代码
+## 我的公众号
 
-[FlowController](https://github.com/all4you/sentinel-tutorial/sentinel-practice/sentinel-flow-control/src/main/java/com/lememo/sentinel/flow/FlowController.java)
+如果你觉得该项目对您有帮助，欢迎您关注我的公众号「逅弈逐码」，了解更多原创文章。
 
+![logo](../../logo.jpg)
