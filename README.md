@@ -12,7 +12,7 @@
 
 ## Sentinel原理系列
 
-- [Sentinel原理：全解析](https://github.com/all4you/sentinel-tutorial/sentinel-principle/sentinel-overall-introduce/sentinel-overall-introduce.md)
+- [Sentinel原理：全解析](sentinel-principle/sentinel-overall-introduce/sentinel-overall-introduce.md)
 - [Sentinel原理：重要概念](https://github.com/all4you/sentinel-tutorial/sentinel-principle/sentinel-concept-of-entities/sentinel-concept-of-entities.md)
 - [Sentinel原理：调用链](https://github.com/all4you/sentinel-tutorial/sentinel-principle/sentinel-slot-chain/sentinel-slot-chain.md)
 - [Sentinel原理：滑动窗口](https://github.com/all4you/sentinel-tutorial/sentinel-principle/sentinel-slide-window/sentinel-slide-window.md)
