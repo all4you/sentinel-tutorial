@@ -16,6 +16,7 @@
 - [Sentinel原理：重要概念](sentinel-principle/sentinel-concept-of-entities/sentinel-concept-of-entities.md)
 - [Sentinel原理：调用链](sentinel-principle/sentinel-slot-chain/sentinel-slot-chain.md)
 - [Sentinel原理：滑动窗口](sentinel-principle/sentinel-slide-window/sentinel-slide-window.md)
+- [Sentinel原理：扩展点](sentinel-principle/sentinel-extension-points/sentinel-extension-points.md)
 - 未完待续。。
 
 
