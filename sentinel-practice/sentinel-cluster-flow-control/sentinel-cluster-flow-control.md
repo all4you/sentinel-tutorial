@@ -96,29 +96,46 @@ http://<ip>:<port>/setClusterMode?mode=<xxx>
 
 
 
-以流控规则为例，假设我们使用 ZooKeeper 作为配置中心，则可以向客户端 FlowRuleManager 注册 ZooKeeper 动态规则源：
+#### 集群客户端
+
+以流控规则为例，假设我们使用 ZooKeeper 作为配置中心，则可以向集群客户端的 FlowRuleManager 或 ParamFlowRuleManager 注册 ZooKeeper 动态规则源：
 
 ``` java
 ReadableDataSource<String, List<FlowRule>> flowRuleDataSource = new ZookeeperDataSource<>(remoteAddress, path, source -> JSON.parseObject(source, new TypeReference<List<FlowRule>>() {}));
 FlowRuleManager.register2Property(flowRuleDataSource.getProperty());
 ```
 
-另外，我们还需要针对 token server 注册集群规则数据源。
+**PS：FlowRuleManager 是管理普通限流的，ParamFlowRuleManager 是管理热点参数限流的**
 
-由于嵌入模式下 token server 和 client 可以随时变换，因此我们只需在每个实例都向集群流控规则管理器ClusterFlowRuleManager 注册动态规则源即可。
+**另外，我们还需要针对 token server 注册集群规则数据源。**
 
-token server 抽象出了命名空间（namespace）的概念，可以支持多个应用/服务，因此我们需要注册一个自动根据 namespace 创建动态规则源的生成器，即Supplier，如下所示:
+#### 集群服务端
+
+token server 抽象出了命名空间（namespace）的概念，可以支持多个应用/服务，因此我们需要通过 ClusterFlowRuleManager 注册一个可以自动根据 namespace 创建动态规则源的生成器，即 Supplier。
+
+Supplier 会根据 namespace 生成类型为 SentinelProperty<List\<FlowRule>> 的动态规则源，不同的 namespace 对应着不同的规则源，若不指定 namespace ，则默认为为应用名：${project.name} 的值。
+
+ClusterFlowRuleManager 中是这样注册 Supplier 的：
 
 ``` java
-// ClusterFlowRuleManager 针对集群限流规则，ClusterParamFlowRuleManager 针对集群热点规则，配置方式类似
+setPropertySupplier(Function<String, SentinelProperty<List<FlowRule>>> propertySupplier)
+```
+
+参数接收的是一个 Function 的函数式接口，提供一个 String，则生成一个 SentinelProperty。
+
+假设我们也用 ZooKeeper 作为集群服务端的配置中心，则可以这样注册一个 Supplier：
+
+``` java
 ClusterFlowRuleManager.setPropertySupplier(namespace -> {
-    return new SomeDataSource(address, dataIdPrefix + namespace).getProperty();
+    ReadableDataSource<String, List<FlowRule>> flowRuleDataSource = 
+        new ZookeeperDataSource<>(remoteAddress, path+"/"+namespace, source -> JSON.parseObject(source, new TypeReference<List<FlowRule>>() {}));
+    return flowRuleDataSource.getProperty();
 });
 ```
 
-Supplier 会根据 namespace 生成动态规则源，类型为 SentinelProperty<List\<FlowRule>>，针对不同的 namespace 生成不同的规则源（监听不同 namespace 的 path）。
+**PS：ClusterFlowRuleManager 针对集群限流规则，ClusterParamFlowRuleManager 针对集群热点规则，配置方式类似。**
 
-默认 namespace 为应用名（project.name）
+当集群限流服务端 namespace set 产生变更时，Sentinel 会自动针对新加入的 namespace 生成动态规则源并进行自动监听，并删除旧的不需要的规则源。
 
 
 
