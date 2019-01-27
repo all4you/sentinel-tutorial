@@ -10,24 +10,15 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>sentinel-cluster-flow-control</artifactId>
+    <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
 
-    <properties>
-        <spring-boot-version>1.5.17.RELEASE</spring-boot-version>
-        <sentinel-version>1.4.0</sentinel-version>
-    </properties>
+    <modules>
+        <module>sentinel-cluster-server-alone</module>
+        <module>sentinel-cluster-client-1</module>
+        <module>sentinel-cluster-client-2</module>
+    </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <version>${spring-boot-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring-boot-version}</version>
-        </dependency>
-    </dependencies>
+
 
 </project>
