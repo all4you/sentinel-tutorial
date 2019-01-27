@@ -26,7 +26,7 @@
 - [Sentinel实战：为系统做限流保护](sentinel-practice/sentinel-flow-control/sentinel-flow-control.md)
 - [Sentinel实战：使用控制台管理规则](sentinel-practice/sentinel-manage-rule-with-dashboard/sentinel-manage-rule-with-dashboard.md)
 - [Sentinel实战：规则持久化的5种方式](sentinel-practice/sentinel-persistence-rules/sentinel-persistence-rules.md)
-- [Sentinel实战：在集群中实现流控(内附详细搭建过程图文描述)](sentinel-practice/sentinel-cluster-flow-control/sentinel-cluster-flow-control.md)
+- [Sentinel实战：在集群中实现流控(内附详细图文搭建过程)](sentinel-practice/sentinel-cluster-flow-control/sentinel-cluster-flow-control.md)
 - [Sentinel实战：如何对热点参数限流](sentinel-practice/sentinel-frequent-param-flow-control/sentinel-frequent-param-flow-control.md)
 - 未完待续。。
 
