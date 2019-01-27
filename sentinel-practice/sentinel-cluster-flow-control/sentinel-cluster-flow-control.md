@@ -410,7 +410,7 @@ http://<ip>:<port>/setClusterMode?mode=<xxx>
 
 ![set-cluster-mode-client](./images/set-cluster-mode-client.png)
 
-**PS：因为我是在同一台机器上模拟的，集群的服务端已经使用了 8720 的对外 api 端口，所以集群的客户端client1的对外 api 端口是 8721，以此类推 client2 对外的 api 端口为 8721。**
+**PS：因为我是在同一台机器上模拟的，集群的服务端已经使用了 8720 的对外 api 端口，所以集群的客户端client1的对外 api 端口是 8721，以此类推 client2 对外的 api 端口为 8722。**
 
 设置成功后，若客户端已经设置了服务端的配置，客户端将会自动连接到远程的 token server。
 
