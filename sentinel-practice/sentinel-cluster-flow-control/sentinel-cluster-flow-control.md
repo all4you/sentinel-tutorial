@@ -488,7 +488,7 @@ http://127.0.0.1:7001/clusterFlow
 
 可以看到同一秒两个 client 通过的 qps 相加的结果是保持在10以下的。
 
-那按照道理 dashboard 中是聚合的两个 client 的 qps 总和，不应该超过10才对，经过与 Sentinel 的开发人员：**乐有** 的讨论，他怀疑 dashboard 把 token-server 的值也统计进去了，我查看了实时数据返回的结果，如下图所示：
+那按照道理 dashboard 中是聚合的两个 client 的 qps 总和，不应该超过10才对，经过与 Sentinel 的开发人员 **乐有** 的讨论，他怀疑 dashboard 把 token-server 的值也统计进去了，我查看了实时数据返回的结果，如下图所示：
 
 ![metrics-aggregation](./images/metrics-aggregation.png)
 
@@ -496,9 +496,33 @@ http://127.0.0.1:7001/clusterFlow
 
 ![metrics-fetcher](./images/metrics-fetcher.png)
 
-和 **乐有** 讨论过后，他也觉得很奇怪，8720 作为 token-server 是不应该有 metric 统计结果的，觉得可能是个 dashboard 的 bug吧，暂且先提个issue。
+8720 作为 token-server 是不应该去统计 metric 结果的，那为什么会把它的结果统计进去了呢？
 
 但是从两台 cluster-client 的 metric 日志中可以看出来，整个集群的 qps 是没有超过10的，这说明核心的功能没有问题。
+
+#### 定位问题
+
+经过 **乐有** 的指导，发现可能是我在同一台机器中同时起了三个应用名相同的进程，而如果在本地启动多个同名应用时，需要加入**-Dcsp.sentinel.log.use.pid=true** 参数，否则日志和监控会被当成同一个应用的，都会混在一起，导致 dashboard 的统计结果出错。
+
+现在我把每个应用上都加上 -Dcsp.sentinel.log.use.pid=true 的参数，再次模拟该请求，观察一下实时监控的结果，发现如下图所示：
+
+![fixed-real-time-monitor](./images/fixed-real-time-monitor.png)
+
+再看 metrics 日志文件，发现文件名也带上了进程号：
+
+![fixed-metrics-logs](./images/fixed-metrics-logs.png)
+
+再看下每个文件中的实际统计结果：
+
+![fixed-client1-metrics](./images/fixed-client1-metrics.png)
+
+![fixed-client2-metrics](./images/fixed-client2-metrics.png)
+
+再看 MetricFetcher 中打印的日志，发现也没有再去请求 token-server 的 metric 了，如下图所示：
+
+![fixed-metrics-fetcher](./images/fixed-metrics-fetcher.png)
+
+
 
 
 
@@ -512,10 +536,19 @@ http://127.0.0.1:7001/clusterFlow
 
 
 
+一个完整的集群请求流程如下图所示：
+
+![cluster-flow-summary](./images/cluster-flow-summary.png)
+
+
+
+
+
 ### 避免踩坑
 
 - 所有版本请使用 1.4.1 ，避免不必要的问题排查
 - 如果在 token server列表中选择 client 时，未出现可选的 client 机器，请先对该 client 发送请求流量以触发 sentinel 的初始化，然后 client 才会连接上 dashboard
+- 本地启动多个同名应用时，需要加入-Dcsp.sentinel.log.use.pid=true 参数，否则日志和监控会被当成同一个应用的，都会混在一起，导致 dashboard 中的统计结果有误
 - token client 也需要配置限流规则，并且指定 clusterMode 为 true
 - 当 token client 请求 token server 超时了，就会退化为本地限流模式
 
