@@ -65,7 +65,7 @@ http://<ip>:<port>/setClusterMode?mode=<xxx>
 
 ## 如何使用
 
-本文示例代码在：http://github.com/all4you/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control 章节
+本文demo在：sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control 章节
 
 下面我们来看一下如何快速使用集群流控功能。接入集群流控模块的步骤如下：
 
@@ -502,7 +502,7 @@ http://127.0.0.1:7001/clusterFlow
 
 #### 定位问题
 
-经过 **乐有** 的指导，发现可能是我在同一台机器中同时起了三个应用名相同的进程，而如果在本地启动多个同名应用时，需要加入**-Dcsp.sentinel.log.use.pid=true** 参数，否则日志和监控会被当成同一个应用的，都会混在一起，导致 dashboard 的统计结果出错。
+经过乐有的指导，发现可能是我在同一台机器中同时起了三个应用名相同的进程，而如果在本地启动多个同名应用时，需要加入 **-Dcsp.sentinel.log.use.pid=true** 参数，否则日志和监控会被当成同一个应用的，都会混在一起，导致 dashboard 的统计结果出错。
 
 现在我把每个应用上都加上 -Dcsp.sentinel.log.use.pid=true 的参数，再次模拟该请求，观察一下实时监控的结果，发现如下图所示：
 
