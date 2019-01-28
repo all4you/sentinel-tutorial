@@ -8,7 +8,7 @@
 
 要想使用集群流控功能，我们需要在应用端配置动态规则源，并通过 Sentinel 控制台实时进行推送。如下图所示：
 
-![push-cluster-rule](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/push-cluster-rule.png)
+![push-cluster-rule](./images/push-cluster-rule.png)
 
 本次我们通过 Nacos 作为我们的规则源的配置中心，首先我们先下载 Nacos 然后在本地启动一个 Nacos 的服务，我是通过源码编译的 Nacos 服务：
 
@@ -23,11 +23,11 @@ cd distribution/target/nacos-server-0.8.0/nacos/bin
 sh startup.sh -m standalone
 ```
 
-![start-up-nacos](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/start-up-nacos.png)
+![start-up-nacos](./images/start-up-nacos.png)
 
 如上图所示，启动成功后，我们可以访问 Nacos 的控制台来进行控制了：
 
-![login-nacos-console](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/login-nacos-console.png)
+![login-nacos-console](./images/login-nacos-console.png)
 
 **PS：控制台默认的用户名，密码都是：nacos**
 
@@ -167,7 +167,7 @@ ClusterFlowRuleManager.setPropertySupplier(namespace -> {
 ]
 ```
 
-![register-cluster-flow-rule](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/register-cluster-flow-rule.png)
+![register-cluster-flow-rule](./images/register-cluster-flow-rule.png)
 
 **PS：实际创建的时候，要把内容中的注释去除掉，否则会报错，因为这不是一个合法的json字符串，这里只是用作描述。**
 
@@ -192,11 +192,11 @@ Sentinel 中提供了一个默认的以独立方式启动的 ClusterTokenServer 
 
 启动后我们可以在控制台中看到如下信息：
 
-![start-up-cluster-server-1](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/start-up-cluster-server-1.png)
+![start-up-cluster-server-1](./images/start-up-cluster-server-1.png)
 
 在 ~/logs/csp/sentinel-record.log 日志文件中将打印如下信息：
 
-![start-up-cluster-server-2](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/start-up-cluster-server-2.png)
+![start-up-cluster-server-2](./images/start-up-cluster-server-2.png)
 
 
 
@@ -294,7 +294,7 @@ http://<ip>:<port>?getRules?type=flow
 
 结果如下图所示：
 
-![flow-rules-list](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/flow-rules-list.png)
+![flow-rules-list](./images/flow-rules-list.png)
 
 **PS：FlowRuleManager 是管理普通限流的，ParamFlowRuleManager 是管理热点参数限流的**
 
@@ -343,7 +343,7 @@ http://<ip>:<port>/setClusterMode?mode=<xxx>
 
 其中 mode 为 0 代表 client，1 代表 server。如下图所示：
 
-![set-cluster-mode-client](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/set-cluster-mode-client.png)
+![set-cluster-mode-client](./images/set-cluster-mode-client.png)
 
 **PS：因为我是在同一台机器上模拟的，集群的服务端已经使用了 8720 的对外 api 端口，所以集群的客户端client1的对外 api 端口是 8721，以此类推 client2 对外的 api 端口为 8722。**
 
@@ -361,7 +361,7 @@ http://127.0.0.1:7001/clusterFlow
 
 如下图所示：
 
-![call-cluster-client-1](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/call-cluster-client-1.png)
+![call-cluster-client-1](./images/call-cluster-client-1.png)
 
 
 
@@ -371,41 +371,41 @@ http://127.0.0.1:7001/clusterFlow
 
 首先先看下 dashboard 中已经连接上来的机器列表吧，如下图所示：
 
-![cluster-server-client-list](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/cluster-server-client-list.png)
+![cluster-server-client-list](./images/cluster-server-client-list.png)
 
 现在我们来创建一个 Token Server ，我启动了三个应用实例，其中 8720 端口对应的实例为 token server，选择 192.168.0.104:8720 这台为服务端，如下图所示：
 
-![add-cluster-token-server-1](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/add-cluster-token-server-1.png)选择其它两个为 cluster client，如下图所示：
+![add-cluster-token-server-1](./images/add-cluster-token-server-1.png)选择其它两个为 cluster client，如下图所示：
 
-![add-cluster-token-server-2](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/add-cluster-token-server-2.png)
+![add-cluster-token-server-2](./images/add-cluster-token-server-2.png)
 
 保存后推送，如下图所示：
 
-![add-cluster-token-server-3](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/add-cluster-token-server-3.png)
+![add-cluster-token-server-3](./images/add-cluster-token-server-3.png)
 
 页面上机器的显示方式为 ip@commandPort，其中 commandPort 为应用端暴露给 Sentinel 控制台的端口。
 
 选择好以后，点击【保存】按钮，刷新页面即可以看到 token server 分配成功：
 
-![token-server-list](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/token-server-list.png)
+![token-server-list](./images/token-server-list.png)
 
 并且我们可以在页面上查看 token server 的连接情况，点击【连接详情】即可查看，如下图所示：
 
-![token-server-connection-info](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/token-server-connection-info.png)
+![token-server-connection-info](./images/token-server-connection-info.png)
 
 我们可以在【集群流控】页面的【Cluster Client列表】中查看具体的集群客户端，如下图所示：
 
-![cluster-client-list](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/cluster-client-list.png)
+![cluster-client-list](./images/cluster-client-list.png)
 
 ### 查看效果
 
 通过 jmeter 模拟流量同时请求两台客户端机器，过一段时间后观察效果。
 
-![jemeter-config-1](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/jmeter-config-1.png)
+![jemeter-config-1](./images/jmeter-config-1.png)
 
 然后在监控页面看到对应资源的集群维度的总 qps ，如下图所示：
 
-![real-time-monitor](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/real-time-monitor.png)
+![real-time-monitor](./images/real-time-monitor.png)
 
 发现通过的 qps 并不是维持在10以内，而是超过了10。
 
@@ -413,23 +413,23 @@ http://127.0.0.1:7001/clusterFlow
 
 首先我们直接查看 ${appName}-metrics.log 日志文件中打印的信息，在我的机器上有两个 metrics 的log文件，分别对应两个 cluster-client：
 
-![metrics-logs](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/metrics-logs.png)
+![metrics-logs](./images/metrics-logs.png)
 
 看下每个文件中具体的内容：
 
-![client1-metrics](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/client1-metrics.png)
+![client1-metrics](./images/client1-metrics.png)
 
-![client2-metrics](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/client2-metrics.png)
+![client2-metrics](./images/client2-metrics.png)
 
 可以看到同一秒两个 client 通过的 qps 相加的结果是保持在10以下的。
 
 那按照道理 dashboard 中是聚合的两个 client 的 qps 总和，不应该超过10才对，经过与 Sentinel 的开发人员 **乐有** 的讨论，他怀疑 dashboard 把 token-server 的值也统计进去了，我查看了实时数据返回的结果，如下图所示：
 
-![metrics-aggregation](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/metrics-aggregation.png)
+![metrics-aggregation](./images/metrics-aggregation.png)
 
 从结果中发现统计结果确实聚合了三台机器的统计值，再把 dashboard 请求 metrics 的结果打印出来看一下：
 
-![metrics-fetcher](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/metrics-fetcher.png)
+![metrics-fetcher](./images/metrics-fetcher.png)
 
 8720 作为 token-server 是不应该去统计 metric 结果的，那为什么会把它的结果统计进去了呢？
 
@@ -441,21 +441,21 @@ http://127.0.0.1:7001/clusterFlow
 
 现在我把每个应用上都加上 -Dcsp.sentinel.log.use.pid=true 的参数，再次模拟该请求，观察一下实时监控的结果，发现如下图所示：
 
-![fixed-real-time-monitor](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/fixed-real-time-monitor.png)
+![fixed-real-time-monitor](./images/fixed-real-time-monitor.png)
 
 再看 metrics 日志文件，发现文件名也带上了进程号：
 
-![fixed-metrics-logs](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/fixed-metrics-logs.png)
+![fixed-metrics-logs](./images/fixed-metrics-logs.png)
 
 再看下每个文件中的实际统计结果：
 
-![fixed-client1-metrics](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/fixed-client1-metrics.png)
+![fixed-client1-metrics](./images/fixed-client1-metrics.png)
 
-![fixed-client2-metrics](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/fixed-client2-metrics.png)
+![fixed-client2-metrics](./images/fixed-client2-metrics.png)
 
 再看 MetricFetcher 中打印的日志，发现也没有再去请求 token-server 的 metric 了，如下图所示：
 
-![fixed-metrics-fetcher](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/fixed-metrics-fetcher.png)
+![fixed-metrics-fetcher](./images/fixed-metrics-fetcher.png)
 
 
 
@@ -473,7 +473,7 @@ http://127.0.0.1:7001/clusterFlow
 
 一个完整的集群请求流程如下图所示：
 
-![cluster-flow-summary](/Users/wanghui/workspace/sentinel-tutorial/sentinel-practice/sentinel-cluster-flow-control/images/cluster-flow-summary.png)
+![cluster-flow-summary](./images/cluster-flow-summary.png)
 
 
 
