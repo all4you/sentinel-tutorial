@@ -19,6 +19,7 @@
         <module>sentinel-slot-chain</module>
         <module>sentinel-slide-window</module>
         <module>sentinel-extension-points</module>
+        <module>sentinel-dashboard-transport</module>
     </modules>
 
 </project>
