@@ -202,5 +202,9 @@ sentinel-dashboard 和 sentinel-core 之间的通讯是基于 http 的，没有�
 
 
 
+## 我的公众号
 
+如果你觉得该项目对您有帮助，欢迎您关注我的公众号「逅弈逐码」，了解更多原创文章。
+
+![logo](../../logo.jpg)
 
