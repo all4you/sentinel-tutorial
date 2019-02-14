@@ -17,6 +17,7 @@
 - [Sentinel原理：调用链](sentinel-principle/sentinel-slot-chain/sentinel-slot-chain.md)
 - [Sentinel原理：滑动窗口](sentinel-principle/sentinel-slide-window/sentinel-slide-window.md)
 - [Sentinel原理：扩展点](sentinel-principle/sentinel-extension-points/sentinel-extension-points.md)
+- [Sentinel原理：控制台是如何获取实时数据的](sentinel-principle/sentinel-dashboard-transport/sentinel-dashboard-transport.md)
 - 未完待续。。
 
 
@@ -27,6 +28,7 @@
 - [Sentinel实战：使用控制台管理规则](sentinel-practice/sentinel-manage-rule-with-dashboard/sentinel-manage-rule-with-dashboard.md)
 - [Sentinel实战：规则持久化的5种方式](sentinel-practice/sentinel-persistence-rules/sentinel-persistence-rules.md)
 - [Sentinel实战：在集群中实现流控](sentinel-practice/sentinel-cluster-flow-control/sentinel-cluster-flow-control.md)
+- [Sentinel实战：集群限流环境搭建(详细图文描述)](sentinel-practice/sentinel-cluster-flow-control/sentinel-cluster-flow-environment-build.md)
 - [Sentinel实战：如何对热点参数限流](sentinel-practice/sentinel-frequent-param-flow-control/sentinel-frequent-param-flow-control.md)
 - 未完待续。。
 

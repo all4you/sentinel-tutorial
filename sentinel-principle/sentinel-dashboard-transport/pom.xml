@@ -3,22 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>sentinel-practice</artifactId>
+        <artifactId>sentinel-principle</artifactId>
         <groupId>com.lememo</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>sentinel-cluster-flow-control</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
 
-    <modules>
-        <module>sentinel-cluster-server-alone</module>
-        <module>sentinel-cluster-client-1</module>
-        <module>sentinel-cluster-client-2</module>
-    </modules>
-
+    <artifactId>sentinel-dashboard-transport</artifactId>
 
 
 </project>
