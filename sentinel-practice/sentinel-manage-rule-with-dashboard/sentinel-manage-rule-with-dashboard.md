@@ -339,9 +339,3 @@ curl http://localhost:8719/setRules?type=<XXXX>&data=<DATA>
 
 
 
-## 我的公众号
-
-如果你觉得该项目对您有帮助，欢迎您关注我的公众号「逅弈逐码」，了解更多原创文章。
-
-![logo](../../logo.jpg)
-
