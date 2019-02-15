@@ -77,7 +77,7 @@ public User getUser(Long uid){
 }
 ```
 
-除了通过跑出异常的方式定义资源外，返回布尔值的方式也是一样的，这里不具体展开了。
+除了通过抛出异常的方式定义资源外，返回布尔值的方式也是一样的，这里不具体展开了。
 
 PS：如果你不想对原有的业务代码进行侵入，也可以通过注解 SentinelResource 来进行资源埋点。
 
@@ -89,11 +89,11 @@ PS：如果你不想对原有的业务代码进行侵入，也可以通过注解
 
 一条FlowRule有以下几个重要的属性组成：
 
-- resource: 规则的资源名
-- grade: 限流阈值类型，qps 或线程数
-- count: 限流的阈值
-- limitApp: 被限制的应用，授权时候为逗号分隔的应用集合，限流时为单个应用
-- strategy: 基于调用关系的流量控制
+- resource：规则的资源名
+- grade：限流阈值类型，qps 或线程数
+- count：限流的阈值
+- limitApp：被限制的应用，授权时候为逗号分隔的应用集合，限流时为单个应用
+- strategy：基于调用关系的流量控制
 - controlBehavior：流控策略
 
 前三个属性比较好理解，最后三个比较难理解，让我们来详细看下最后三个属性：
@@ -108,15 +108,15 @@ PS：如果你不想对原有的业务代码进行侵入，也可以通过注解
 
 表示不区分调用者，来自任何调用者的请求都将进行限流统计。
 
-- {some_origin_name}
+- {origin}
 
-表示针对特定的调用者，只有来自这个调用者的请求才会进行流量控制。
+表示针对特定的调用者，只有来自这个调用者的请求才会进行流量控制。该特定调用者的名称是通过 ContextUtil.entry(origin) 来设置的。
 
 例如：资源 `NodeA` 配置了一条针对调用者 **caller1** 的规则，那么当且仅当来自 **caller1** 对 `NodeA` 的请求才会触发流量控制。
 
 - other
 
-表示除 {some_origin_name} 以外的其余调用方的流量进行流量控制。
+表示除 {origin} 以外的其余调用方的流量进行流量控制。
 
 例如：资源 `NodeA` 配置了一条针对调用者 **caller1** 的限流规则，同时又配置了一条调用者为 **other** 的规则，那么任意来自非 **caller1** 对 `NodeA` 的调用，都不能超过 **other** 这条规则定义的阈值。
 
@@ -128,7 +128,7 @@ PS：如果你不想对原有的业务代码进行侵入，也可以通过注解
 
 根据调用方进行限流。ContextUtil.enter(resourceName, origin) 方法中的 origin 参数标明了调用方的身份。
 
-如果 strategy 选择了DIRECT ，则还需要根据限流规则中的 limitApp 字段根据调用方在不同的场景中进行流量控制，包括有：”所有调用方“、”特定调用方origin“、”除特定调用方origin之外的调用方“。
+如果 strategy 选择了DIRECT ，则还需要根据限流规则中的 limitApp 字段根据调用方在不同的场景中进行流量控制，包括有：“所有调用方default”、“特定调用方origin”、“除特定调用方origin之外的调用方”。
 
 - STRATEGY_RELATE
 
@@ -144,6 +144,16 @@ PS：如果你不想对原有的业务代码进行侵入，也可以通过注解
 根据调用链路入口限流。假设来自入口 Entrance1 和 Entrance2 的请求都调用到了资源 NodeA，Sentinel 允许根据某个入口的统计信息对资源进行限流。
 
 举例来说：我们可以设置 FlowRule.strategy 为 RuleConstant.CHAIN，同时设置 FlowRule.refResource 为 Entrance1 来表示只有从入口 Entrance1 的调用才会记录到 NodeA 的限流统计当中，而对来自 Entrance2 的调用可以放行。
+
+为什么要了解 limitApp 和 strategy 呢？主要是因为进行流控阈值判断时所需要用到的 Node 就是通过这两个字段确定的，具体来说可以用下面的表格来表示：
+
+| strategy | limitApp           | selectedNode                                           |
+| -------- | ------------------ | ------------------------------------------------------ |
+| direct   | default            | clusterNode                                            |
+| direct   | {origin}           | originNode                                             |
+| direct   | other && !{origin} | originNode                                             |
+| relate   | -                  | 特定refRes下的clusterNode                              |
+| chain    | -                  | 特定context下的defaultNode，需满足：refRes=contextName |
 
 ### controlBehavior
 

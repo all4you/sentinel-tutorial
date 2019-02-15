@@ -245,25 +245,7 @@ public Node getLastNode() {
 
 ![add-child-1](images/add-child-1.png)
 
-紧接着再进入一次，资源名不同，会再次生成一个新的Entry，上面的图形就变成下图这样：
-
-![add-child-2](images/add-child-2.png)
-
-此时再次调用context的getLastNode方法，因为此时curEntry的parent不再是null了，所以获取到的lastNode是curEntry.parent.curNode，在上图中可以很方便的看出，这个节点就是**node0**。那么把当前节点node1添加到lastNode的子节点中去，上面的图形就变成下图这样：
-
-![add-child-3](images/add-child-3.png)
-
-然后将当前node设置给context的curNode，上面的图形就变成下图这样：
-
-![add-child-4](images/add-child-4.png)
-
-假如再创建一个Entry，然后再进入一次不同的资源名，上面的图就变成下面这样：
-
-![add-child-5](images/add-child-5.png)
-
-至此NodeSelectorSlot的基本功能已经大致分析清楚了。
-
-**PS：以上的分析是基于每次执行SphU.entry(name)时，资源名都是不一样的前提下。如果资源名都一样的话，那么生成的node都相同，则只会再第一次把node加入到entranceNode的子节点中去，其他的时候，只会创建一个新的Entry，然后替换context中的curEntry的值。**
+NodeSelectorSlot 在执行的过程中完成了 curEntry 中 curNode 的初始化，curEntry 是在创建的时候被绑定到 context 上去的，并且在绑定的时候会添加到上一次的 entry 中去，从而形成一个链式结构。
 
 ## ClusterBuilderSlot
 
@@ -482,6 +464,16 @@ sentinel的限流降级等功能，主要是通过一个SlotChain实现的。在
 三、进行系统保护，限流，降级等规则校验的SystemSlot、AuthoritySlot、FlowSlot、DegradeSlot
 
 后面几个Slot依赖于前面几个Slot统计的结果。至此，每种Slot的功能已经基本分析清楚了。
+
+### 要点
+
+1.每次的资源请求都需要在一个 context 中执行，如果没有通过 ContextUtil.entry() 方法显示的创建 context ，会系统会通过 MyContextUtil.entry() 来创建一个默认的 context。
+
+2.context 保存了一次请求生命周期中的全部数据。
+
+3.一个 context 都会唯一绑定到一个 resource 中去，但是一个 resource 可能会绑定这多个 context。
+
+4.一个 resource 唯一确定一个全局共享的 ProcessSlotChain。
 
 
 
