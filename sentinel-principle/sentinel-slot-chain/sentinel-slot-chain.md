@@ -245,6 +245,27 @@ public Node getLastNode() {
 
 ![add-child-1](images/add-child-1.png)
 
+紧接着再进入一次，资源名不同，会再次生成一个新的Entry，上面的图形就变成下图这样：
+
+![add-child-2](images/add-child-2.png)
+
+此时再次调用context的getLastNode方法，因为此时curEntry的parent不再是null了，所以获取到的lastNode是curEntry.parent.curNode，在上图中可以很方便的看出，这个节点就是**node0**。那么把当前节点node1添加到lastNode的子节点中去，上面的图形就变成下图这样：
+
+![add-child-3](images/add-child-3.png)
+
+然后将当前node设置给context的curNode，上面的图形就变成下图这样：
+
+![add-child-4](images/add-child-4.png)
+
+假如再创建一个Entry，然后再进入一次不同的资源名，上面的图就变成下面这样：
+
+![add-child-5](images/add-child-5.png)
+
+至此NodeSelectorSlot的基本功能已经大致分析清楚了。
+
+**PS：以上的分析是基于每次执行SphU.entry(name)时，资源名都是不一样的前提下。如果资源名都一样的话，那么生成的node都相同，则只会再第一次把node加入到entranceNode的子节点中去，其他的时候，只会创建一个新的Entry，然后替换context中的curEntry的值。**
+
+
 NodeSelectorSlot 在执行的过程中完成了 curEntry 中 curNode 的初始化，curEntry 是在创建的时候被绑定到 context 上去的，并且在绑定的时候会添加到上一次的 entry 中去，从而形成一个链式结构。
 
 ## ClusterBuilderSlot
